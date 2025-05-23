@@ -1,0 +1,138 @@
+hi can u edit this riddlle instead of glens bakehouse <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Riddle Challenge</title>
+  <style>
+    body {
+      background-color: #e8f5e9;
+      font-family: 'Comic Sans MS', cursive;
+      color: #2e7d32;
+      text-align: center;
+      padding: 30px;
+    }
+    .riddle-box {
+      display: none;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #ffffff;
+      border: 4px dashed #66bb6a;
+      border-radius: 20px;
+      box-shadow: 0 0 10px #a5d6a7;
+    }
+    .riddle-box.active {
+      display: block;
+    }
+    input[type="text"], select {
+      padding: 10px;
+      width: 80%;
+      margin-top: 10px;
+      border: 2px solid #81c784;
+      border-radius: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      background-color: #66bb6a;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #final-message {
+      display: none;
+      font-size: 24px;
+      margin-top: 40px;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Birthday Riddle Adventure 🎂</h1>
+  <p>Solve each riddle to unlock the next surprise!</p>
+
+  <div id="riddles"></div>
+  <div id="final-message">🎊 Happy birthday bday boy, you win!! 🎉🎉🎉</div>
+
+  <script>
+    const riddles = [
+      { question: `I don’t just drive — I glide with flair,<br>A beast in purple, with curves so rare.<br>On tracks I scream, in streets I flex,<br>The dream machine that turns all necks.<br>If midnight’s shade makes your heart race,<br>Find the one who'd sell their soul for a taste.`, answer: "Porsche 911 GT3 RS Midnight Purple" },
+      { question: `With style and swag, I make my claim,<br>A sour fruit tied to a spicy name.<br>Bad to the bone, but charming still,<br>My name echoes with a rebel’s will.<br><strong>Who am I?</strong>`, answer: "7321" },
+      { question: `I once was a beast, an ant so feared,<br>Now I serve my king, with voice that's weird.<br>With claws so sharp and loyalty grand,<br>I'd destroy whole armies at a wave of his hand.<br>I bow, I hiss, I serve with pride—`, answer: "Beru" },
+      { question: `In the sky I soar, though not in jet,<br>With “Sam” by my side, I’m a duo you won’t forget.<br>Dreaming of cockpits, ranks, and salute,<br>But on the ground, I'm still kinda cute.<br><strong>Who am I?</strong>`, answer: "1890" },
+      { question: `In times of silence, I make my move,<br>To places tiled and often smooth.<br>Excuse me please, I’ll be right back soon—<br>Nature calls, even before noon!<br><strong>Who am I?</strong>`, answer: "9036" },
+      { question: `We crushed the norm, made laughter reign,<br>With jokes that danced inside your brain.<br>From sketches wild to meme-storm rides,<br>We ruled the screen, side by side.<br>Reality? Nah—we shattered that scene,<br>With one guy who edits like a meme machine.<br><strong>Who am I?</strong>`, answer: "8973" },
+      { question: `In the kitchen realm, I cause some drama,<br>A clank, a spark — cue the trauma!<br>Smoothie or chaos? I can’t always tell,<br>Just one spoon, and all goes to—well…<br><strong>Who am I?</strong>`, answer: "2154" },
+      { question: `No matter the tale, wild or bland,<br>I’ll say two words—you’ll understand.<br>With curious eyes and a thoughtful stare,<br>I drop my phrase with scholar flair.<br>"That’s… <em>damn interesting</em>," I declare with pride,<br>As if I’ve seen the universe collide.<br><strong>Who am I?</strong>`, answer: "7651" },
+      { question: `I command the kitchen like a warzone map,<br>With spoons as swords and pans that clap.<br>From cosmic meals to spicy flair,<br>Even Gordon might stop and stare.<br><strong>Who am I?</strong>`, answer: "0354" },
+      { question: `She’s the boss without a crown,<br>Turns chaos up, then calms it down.<br>Finds what's lost with just one look,<br>Her love’s a spell, no need for a book.<br><strong>Who is she?</strong>`, answer: "5394" },
+      { question: `He fixes wires, moods, and days,<br>Speaks in grunts but loves in waves.<br>His jokes are ancient, yet he’s proud,<br>The family’s rock, strong and loud.<br><strong>Who is he?</strong>`, answer: "2948" },
+      { question: `I’m not a hotline, but I care for your cry,<br>When trouble strikes, I’m the first to reply.<br>Though I’m no lady, I defend with might,<br>Guess who I am, always ready to fight?<br><strong>Who am I?</strong>`, answer: "0673" },
+      { question: `A guide, a tease, a secret vault,<br>Blames me quick, but it’s never his fault.<br>He guards like a knight, jokes like a clown,<br>Can lift me up or pin me down.<br><strong>Who is he?</strong>`, answer: "4683" },
+      { question: `What time was I born?`, options: ["7:10 pm", "7:02 pm", "7:10 am", "7:02 am"], answer: "7:02 pm", type: "mcq" },
+      { question: `You took me to sand, pretending “just chill,”<br>But your hands were sweaty — nerves hard to kill.<br>The waves were crashing, your voice kinda cracked,<br>You dropped down (on purpose!) — heart fully attacked.<br>I said “yes,” and now here we are —<br>Find the date where you fumbled like a star.`, answer: "6/10/2024" },
+      { question: `I march in squads, I roll with fate,<br>My dice decide my soldiers' state.<br>With paints and glue, I come to life,<br>But on the field, I bring the strife.<br>I'm not a toy, I’m war with flair—<br>Find the one who builds armies with care.`, answer: "Warhammer" },
+     { question: `He asks for IDs like it’s his mission,<br>
+Then disappears like a ghost in a Valorant vision.<br>
+With every clutch or tragic loss at hand,<br>
+He greets the desk with his noble forehead slam.<br>
+Who is this warrior of game and rage,<br>
+Slammed through every ranked stage?`, answer: "3211" },
+      { question: `Decode: ctktaAaonntti!.`, answer: "Attack on titan!" },
+       { question: `Small in size but big in cheer,<br>She’s like a sister who’s always near.<br>With laughter, love, and playful fun,<br>She’s hiding a clue—go, little one!`, answer: "1154" },
+      { question: `She’s the plot twist in my day,<br>A heart thief in the cutest way.<br>One look, I melt — it’s not fair,<br>Her eyes hold storms and love and flair.<br><strong>Who is she?</strong>`, answer: "4444" },
+      { question: `I capture moments, frame by frame,<br>No instant screen to show my name.<br>With winding gears and reels inside,<br>In silver light, your memories hide.<br>Click and whirr, then wait and see—<br>What ancient magic captures thee?<br><strong>What am I?</strong>`, answer: "film camera" },
+      { question: `He’s wise, kind, and aging fine,<br>With creams and oils that always shine.<br>Skincare king with a glowing face,<br>Find him in his self-care space.`, answer: "8832" }
+    ];
+
+    const container = document.getElementById("riddles");
+
+    riddles.forEach((riddle, index) => {
+      const div = document.createElement("div");
+      div.classList.add("riddle-box");
+      if (index === 0) div.classList.add("active");
+
+      let content = `<h3>Riddle #${index + 1}</h3><p>${riddle.question}</p>`;
+      if (riddle.image) {
+        content += `<img src="${riddle.image}" alt="Puzzle image">`;
+      }
+      if (riddle.options) {
+        content += `<select id='input${index}'><option value=''>--Select--</option>`;
+        riddle.options.forEach(opt => content += `<option>${opt}</option>`);
+        content += `</select>`;
+      } else {
+        content += `<input type='text' id='input${index}' />`;
+      }
+      content += `<br><button onclick='checkAnswer(${index})'>Submit</button><p id='result${index}'></p>`;
+      div.innerHTML = content;
+      container.appendChild(div);
+    });
+
+    function checkAnswer(index) {
+      const input = document.getElementById(`input${index}`);
+      const result = document.getElementById(`result${index}`);
+      const userAnswer = input.value.trim();
+      const correct = riddles[index].answer;
+      if (userAnswer.toLowerCase() === correct.toLowerCase()) {
+        result.innerText = "✅ Correct!";
+        result.style.color = "green";
+        if (index + 1 < riddles.length) {
+          document.querySelectorAll(".riddle-box")[index + 1].classList.add("active");
+        } else {
+          document.getElementById("final-message").style.display = "block";
+        }
+      } else {
+        result.innerText = "❌ Try again!";
+        result.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
